@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-image {
+  background-image: url('./assets/bgImg2.jpg');
+  background-size: cover;
+}
 
 /* body {
   margin: 0;

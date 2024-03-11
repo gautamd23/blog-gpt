@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div className=" h-screen flex justify-center items-center relative ">
+    <div className="bg-gradient-to-r from-fuchsia-600 to-purple-600 h-screen flex justify-center items-center relative ">
       <div className="py-7 shadow-lg px-9 bg-black  rounded-md text-white flex flex-col  items-center gap-3">
         <h1 className="text-2xl mb-3">Blog-GPT</h1>
         <p className="text-sm">

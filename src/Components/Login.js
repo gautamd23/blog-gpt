@@ -91,14 +91,14 @@ export default function () {
   }
 
   return (
-    <div className="flex justify-center items-center bg-black h-screen">
+    <div className="bg-gradient-to-r from-fuchsia-600 to-purple-600 flex justify-center items-center bg-gray-200 h-screen">
       <div className="">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3  bg-white py-8 px-10 "
+          className="flex flex-col gap-3 bg-white  py-8 px-10 shadow-lg rounded-lg"
         >
           <input
-            className="outline-none  py-2 px-2  border-b-2"
+            className="outline-none  py-2 px-2  border-b-2 bg-transparent"
             type="text"
             placeholder="Username"
             name="username"
@@ -109,9 +109,9 @@ export default function () {
           {toggleLogin && (
             <>
               <input
-                className="outline-none  py-2 px-2  border-b-2"
+                className="outline-none  py-2 px-2  border-b-2 bg-transparent"
                 type="email"
-                placeholder="Eamil"
+                placeholder="Email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -120,7 +120,7 @@ export default function () {
             </>
           )}
           <input
-            className="outline-none py-2 px-2  border-b-2"
+            className="outline-none py-2 px-2  border-b-2 bg-transparent"
             type="password"
             placeholder="Password"
             name="password"
@@ -138,12 +138,12 @@ export default function () {
 
           <button
             type="submit"
-            className="py-1 px-6 bg-red-600  text-white mt-4"
+            className="py-1 px-6 bg-red-600 rounded-md text-white mt-4"
           >
             {toggleLogin ? "Sign Up" : "Login"}
           </button>
           <p className="text-xs">
-            {toggleLogin ? "Already have an account?" : "New User?"}
+            {toggleLogin ? "Already have an account? " : "New User? "}
             <span
               className="font-bold text-xs cursor-pointer"
               onClick={() => setToggleLogin(!toggleLogin)}

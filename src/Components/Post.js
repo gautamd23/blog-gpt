@@ -1,7 +1,12 @@
 import React from 'react'
+import SideBar from './SideBar'
+import Form from './Form'
 
 export default function Post() {
   return (
-    <div>Post</div>
+    <div className='flex '>
+      <SideBar/>
+      <Form/>
+    </div>
   )
 }
