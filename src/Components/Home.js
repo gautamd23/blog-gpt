@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -10,9 +10,9 @@ export default function Home() {
           AI powered SAAS solution to genrate SEO optimizes blog post
         </p>
         <div className="w-full">
-          <button className="py-1 w-full bg-green-600 rounded-sm opacity-100 mt-3">
+          <Link to="/login"><button className="py-1 w-full bg-green-600 rounded-sm opacity-100 mt-3">
             Begin
-          </button>
+          </button></Link>
         </div>
       </div>
     </div>
