@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
   const [toggleLogin, setToggleLogin] = useState(true);
+  const [loginError, setLoginError] = useState('')
+  const [loggedIn, setLoggedIn] = useState(false)
+  
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -19,22 +24,51 @@ export default function () {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log(formData);
+
     try {
       const formDataJSON = JSON.stringify(formData);
       console.log("Form Data JSON:", formDataJSON);
-      const response = await axios.post(
-        "http://localhost:4000/signup",
-        formDataJSON,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+      console.log(toggleLogin);
+      if (toggleLogin) {
+        const response = await axios.post(
+          "http://localhost:4000/signup",
+          formDataJSON,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("login");
+        console.log(response.data);
+      } else {
+        const response = await axios.post(
+          "http://localhost:4000/login",
+          formDataJSON,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        // console
+        
+        console.log(response.data);
+        if(response.data ==="OK") {
+         setLoggedIn(true)
+          navigate("/post");
+          console.log("logged in..");
+        } else {
+          
+          
         }
-      );
-      console.log(response.data);
+        
+      }
+
       resetForm();
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.error);
+      setLoginError(error.response.data.error)
     }
   }
   function resetForm() {
@@ -44,15 +78,16 @@ export default function () {
       password: "",
     });
   }
+  
   return (
     <div className="flex justify-center items-center bg-black h-screen">
       <div className="">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3  bg-white py-14 px-10 rounded-lg"
+          className="flex flex-col gap-3  bg-white py-8 px-10 rounded-lg"
         >
           <input
-            className="outline-none bg-slate-100 py-2 px-2 rounded-lg"
+            className="outline-none  py-2 px-2  border-b-2"
             type="text"
             placeholder="Username"
             name="username"
@@ -61,7 +96,7 @@ export default function () {
           ></input>
           {toggleLogin && (
             <input
-              className="outline-none bg-slate-100 py-2 px-2 rounded-lg"
+              className="outline-none  py-2 px-2  border-b-2"
               type="email"
               placeholder="Eamil"
               name="email"
@@ -70,13 +105,14 @@ export default function () {
             ></input>
           )}
           <input
-            className="outline-none bg-slate-100 py-2 px-2 rounded-lg"
+            className="outline-none py-2 px-2  border-b-2"
             type="password"
             placeholder="Password"
             name="password"
             value={formData.password}
             onChange={handleChange}
           ></input>
+          <p className="text-red-600 text-xs ">{loginError}</p>
           <button
             type="submit"
             className="py-1 px-6 bg-red-600 rounded-lg text-white mt-4"
