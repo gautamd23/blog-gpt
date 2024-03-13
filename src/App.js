@@ -22,6 +22,7 @@ function App() {
   return (
     <div className=" justify-center  bg-no-repeat bg-cover bg-center">
       {/* <img className=" absolute h-screen w-screen" src={bgImg}></img> */}
+      {/* <img className=" absolute h-screen w-screen" src={bgImg}></img> */}
       <RouterProvider router={appRouter} />
     </div>
   );
