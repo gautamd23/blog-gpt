@@ -103,7 +103,7 @@ constants.js
 # vuepress v2.x temp and cache directory
 .temp
 .cache
-
+server.js
 # Docusaurus cache and generated files
 .docusaurus
 

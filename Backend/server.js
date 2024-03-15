@@ -5,11 +5,23 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import axios from "axios";
 
+import { OPEN_KEY } from '../src/utils/constants.js';
+import OpenAI from "openai";
+
+
+const openai = new OpenAI({
+  apiKey: OPEN_KEY, // defaults to process.env["OPENAI_API_KEY"]
+  dangerouslyAllowBrowser: true
+});
+
 const port = 4000;
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
+// const openaiApiKey = OPEN_KEY;
+// const openaiEndpoint = "https://api.openai.com/v1/engines/davinci/completions";
 const db = new pg.Client({
   user: "postgres",
   password: "Dhiman@23",
@@ -53,11 +65,40 @@ app.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid password" });
     } else {
-        res.sendStatus(200)
+      res.sendStatus(200);
     }
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "An error occurred" });
+  }
+});
+
+app.post("/api/generate", async (req, res) => {
+  const { prompt } = req.body;
+  try {
+    const stream = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: prompt }],
+      stream: true,
+    });
+
+    const generatedPost = [];
+
+    stream.on('data', (response) => {
+      generatedPost.push(response.choices[0].message.content);
+    });
+
+    stream.on('end', () => {
+      res.json({ generatedPost });
+    });
+
+    stream.on('error', (error) => {
+      console.error('OpenAI API error:', error);
+      res.status(500).json({ error: 'Failed to generate post' });
+    });
+  } catch (error) {
+    console.error('Error calling OpenAI API:', error.message);
+    res.status(500).json({ error: 'Failed to generate post' });
   }
 });
 
