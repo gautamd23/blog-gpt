@@ -5,7 +5,7 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import axios from "axios";
 
-import { OPEN_KEY } from '../src/utils/constants.js';
+import {OPEN_KEY } from '../src/utils/constants.js';
 import OpenAI from "openai";
 
 
